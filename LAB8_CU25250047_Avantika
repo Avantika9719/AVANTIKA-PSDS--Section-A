@@ -1,0 +1,133 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main() {
+    int N, K;
+
+    cin >> N >> K;
+
+    vector<int> arr(N);
+
+    for (int i = 0; i < N; i++) {
+        cin >> arr[i];
+    }
+
+    int windowSum = 0;
+
+    for (int i = 0; i < K; i++) {
+        windowSum += arr[i];
+    }
+
+    int maxSum = windowSum;
+
+    for (int i = K; i < N; i++) {
+        windowSum = windowSum - arr[i - K] + arr[i];
+
+        if (windowSum > maxSum) {
+            maxSum = windowSum;
+        }
+    }
+
+    cout << "Maximum sum = " << maxSum;
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+#include <iostream>
+#include <string>
+#include <unordered_map>
+using namespace std;
+
+int main() {
+    string S;
+    cin >> S;
+
+    unordered_map<char, int> last;
+    int left = 0, maxLen = 0;
+
+    for (int right = 0; right < S.length(); right++) {
+        if (last.find(S[right]) != last.end())
+            left = max(left, last[S[right]] + 1);
+
+        last[S[right]] = right;
+        maxLen = max(maxLen, right - left + 1);
+    }
+
+    cout << maxLen;
+
+    return 0;
+}*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*nclude <iostream>
+#include <vector>
+using namespace std;
+
+struct Edge {
+    int u, v, w;
+};
+
+int main() {
+    int N, M, K;
+    cin >> N >> M >> K;
+
+    vector<Edge> edges(M);
+
+    for (auto &e : edges)
+        cin >> e.u >> e.v >> e.w;
+
+    const long long INF = 1e18;
+    vector<long long> dp(N + 1, INF);
+    dp[1] = 0;
+
+    long long ans = INF;
+
+    for (int k = 1; k <= K; k++) {
+        vector<long long> next = dp;
+
+        for (auto e : edges) {
+            if (dp[e.u] != INF)
+                next[e.v] = min(next[e.v], dp[e.u] + e.w);
+
+            if (dp[e.v] != INF)
+                next[e.u] = min(next[e.u], dp[e.v] + e.w);
+        }
+
+        dp = next;
+        ans = min(ans, dp[N]);
+    }
+
+    cout << (ans == INF ? -1 : ans);
+
+    return 0;
+}*/
